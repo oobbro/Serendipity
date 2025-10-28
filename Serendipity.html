@@ -30,6 +30,7 @@
         const tips = [
             '多喝水哦~', '保持微笑呀', '每天都要元气满满',
             '记得吃水果', '保持好心情', '好好爱自己', '死恋爱脑',
+            '贪吃鬼','选择题全蒙对',
             '好好学习','加油备考', '梦想成真', '期待下一次见面',
             '金榜题名', '顺顺利利', '早点休息', '愿所有烦恼都消失',
             '别熬夜', '今天过得开心嘛', '天冷了，多穿衣服'
@@ -69,19 +70,16 @@
             // 添加到页面
             document.body.appendChild(tip);
             
-            // 3秒后自动消失（避免弹窗过多）
-            setTimeout(() => {
-                tip.style.opacity = 0;
-                setTimeout(() => document.body.removeChild(tip), 300);
-            }, 3000);
+            
         }
 
         // 批量创建弹窗（66个，和原代码一致，可修改数量）
-        const total = 66;
+        const total = 99;
         for (let i = 0; i < total; i++) {
             // 间隔创建，避免瞬间卡顿
             setTimeout(createTipBox, i * 30);
         }
     </script>
 </body>
+
 </html>
