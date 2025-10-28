@@ -77,7 +77,7 @@
         }
 
         // 批量创建弹窗（66个，和原代码一致，可修改数量）
-        const total = 66;
+        const total = 88;
         for (let i = 0; i < total; i++) {
             // 间隔创建，避免瞬间卡顿
             setTimeout(createTipBox, i * 30);
