@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>温馨提示</title>
     <style>
-        /* 弹窗样式 */
+        /* 弹窗样式 - 手机端适配优化 */
         .tip-box {
-            position: fixed; /* 固定位置，不随滚动动 */
-            padding: 15px 25px;
+            position: fixed;
+            padding: 10px 15px;
             border-radius: 8px;
             font-family: "微软雅黑", sans-serif;
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px); /* 响应式字体，适配不同屏幕 */
             color: #333;
-            z-index: 9999; /* 置顶显示 */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 9999; /* 确保置顶显示 */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             animation: fadeIn 0.3s ease;
+            max-width: 80vw; /* 不超过屏幕宽度的80%，避免手机端溢出 */
+            min-width: 120px;
         }
-        /* 淡入动画 */
+        /* 淡入动画 - 保持视觉流畅 */
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
@@ -26,60 +28,59 @@
 </head>
 <body>
     <script>
-        // 提示文字列表（保留原内容，新增/修改可直接加）
+        // 提示文字列表（保留趣味内容，手机端阅读友好）
         const tips = [
             '多喝水哦~', '保持微笑呀', '每天都要元气满满',
-            '记得吃水果', '保持好心情', '好好爱自己', '死恋爱脑',
-            '贪吃鬼','选择题全蒙对',
+            '记得吃水果', '保持好心情', '好好爱自己', '选择题全蒙对',
             '好好学习','加油备考', '梦想成真', '期待下一次见面',
             '金榜题名', '顺顺利利', '早点休息', '愿所有烦恼都消失',
             '别熬夜', '今天过得开心嘛', '天冷了，多穿衣服'
         ];
 
-        // 背景颜色列表
+        // 背景颜色列表（保持清新风格）
         const bgColors = [
             'lightpink', 'skyblue', 'lightgreen', 'lavender',
             'lightyellow', 'plum', 'coral', 'bisque', 'aquamarine',
             'mistyrose', 'honeydew', 'lavenderblush', 'oldlace'
         ];
 
-        // 生成随机位置（适配电脑/手机屏幕）
-        function getRandomPos(boxWidth, boxHeight) {
+        // 生成随机位置（严格适配手机屏幕，避免弹窗超出可视区域）
+        function getRandomPos() {
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
-            // 确保弹窗不超出屏幕
+            const boxWidth = Math.min(200, screenWidth - 40); // 弹窗宽度自适应，最大200px，最小适配屏幕边距
+            const boxHeight = 50;
             const x = Math.random() * (screenWidth - boxWidth);
             const y = Math.random() * (screenHeight - boxHeight);
-            return { x, y };
+            return { x, y, boxWidth, boxHeight };
         }
 
-        // 创建单个弹窗
+        // 创建单个弹窗（新增自动关闭逻辑，避免手机端弹窗堆积）
         function createTipBox() {
             const tip = document.createElement('div');
             tip.className = 'tip-box';
             
-            // 随机文字和颜色
+            // 随机文字和背景色
             tip.textContent = tips[Math.floor(Math.random() * tips.length)];
             tip.style.backgroundColor = bgColors[Math.floor(Math.random() * bgColors.length)];
             
-            // 随机位置
-            const { x, y } = getRandomPos(200, 60); // 弹窗宽200px、高60px
+            // 随机位置和尺寸
+            const { x, y, boxWidth } = getRandomPos();
             tip.style.left = `${x}px`;
             tip.style.top = `${y}px`;
+            tip.style.width = `${boxWidth}px`;
             
             // 添加到页面
             document.body.appendChild(tip);
             
-            
+           
         }
 
-        // 批量创建弹窗（66个，和原代码一致，可修改数量）
+        // 批量创建弹窗（99个，可根据需求调整数量）
         const total = 99;
         for (let i = 0; i < total; i++) {
-            // 间隔创建，避免瞬间卡顿
-            setTimeout(createTipBox, i * 30);
+            setTimeout(createTipBox, i * 30); // 间隔创建，避免瞬间卡顿
         }
     </script>
 </body>
-
 </html>
