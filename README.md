@@ -69,12 +69,7 @@
             
             // 添加到页面
             document.body.appendChild(tip);
-            
-            // 3秒后自动消失（避免弹窗过多）
-            setTimeout(() => {
-                tip.style.opacity = 0;
-                setTimeout(() => document.body.removeChild(tip), 300);
-            }, 3000);
+        
         }
 
         // 批量创建弹窗（66个，和原代码一致，可修改数量）
